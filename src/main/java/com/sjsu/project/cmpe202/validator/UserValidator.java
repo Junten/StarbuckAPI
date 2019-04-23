@@ -32,7 +32,7 @@ public class UserValidator implements Validator {
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
-        if (user.getPassword().length() != 4) {
+        if (user.getPin().length() != 4) {
             errors.rejectValue("password", "Size.userForm.password");
         }
     }

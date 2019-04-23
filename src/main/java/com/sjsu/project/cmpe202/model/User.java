@@ -1,15 +1,14 @@
 package com.sjsu.project.cmpe202.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "username", length = 36, nullable = false)
@@ -17,9 +16,6 @@ public class User implements Serializable {
 
     @Column(name = "pin", length = 4, nullable = false)
     private String pin;
-
-//    @OneToMany(mappedBy = "user")
-//    private List<Card> cardList;
 
     public String getUsername() {
         return username;
@@ -37,19 +33,11 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getPassword() {
+    public String getPin() {
         return pin;
     }
 
-    public void setPassword(String pin) {
+    public void setPin(String pin) {
         this.pin = pin;
     }
-
-//    public List<Card> getCardList() {
-//        return cardList;
-//    }
-//
-//    public void setCardList(List<Card> cardList) {
-//        this.cardList = cardList;
-//    }
 }

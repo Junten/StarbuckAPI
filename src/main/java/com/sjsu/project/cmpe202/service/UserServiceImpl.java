@@ -5,6 +5,7 @@ import com.sjsu.project.cmpe202.model.User;
 import com.sjsu.project.cmpe202.repository.CardRepository;
 import com.sjsu.project.cmpe202.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +24,17 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username);
     }
 
+//    @Override
+//    public List<Card> findCardByUser(User user) {
+//        List<Card> cardList = cardRepository.findCardsByUser(user);
+//        return cardList;
+//    }
+
     @Override
-    public List<Card> findCardByUser(User user) {
-        return cardRepository.findCardsByUser(user);
+    public void save(Card card) {
+        card.setUser(card.getUser());
+        card.setCardNumber(card.getCardNumber());
+        card.setCardCode(card.getCardCode());
+        cardRepository.save(card);
     }
 }

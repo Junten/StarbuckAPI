@@ -2,14 +2,13 @@ package com.sjsu.project.cmpe202.model;
 
 import javax.persistence.*;
 
-import java.io.Serializable;
 
 @Entity
 @Table(name = "cards")
-public class Card implements Serializable {
+public class Card {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "card_number", length = 9, nullable = false)
@@ -19,7 +18,7 @@ public class Card implements Serializable {
     private String cardCode;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userID")
+    @JoinColumn(name= "user_id", nullable = false)
     private User user;
 
     public int getId() {

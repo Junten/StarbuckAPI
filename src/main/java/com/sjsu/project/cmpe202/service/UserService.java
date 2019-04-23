@@ -8,5 +8,6 @@ import java.util.List;
 public interface UserService {
     User findByUsername(String username);
 
-    List<Card> findCardByUser(User user);
+//    List<Card> findCardByUser(User user);
+    void save(Card card);
 }

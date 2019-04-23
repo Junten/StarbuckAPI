@@ -8,6 +8,7 @@ import com.sjsu.project.cmpe202.model.Card;
 import com.sjsu.project.cmpe202.repository.CardRepository;
 import com.sjsu.project.cmpe202.repository.UserRepository;
 
+import com.sjsu.project.cmpe202.service.UserService;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,9 @@ public class AppController {
 
     @Autowired
     CardRepository cardRepository;
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(){
@@ -42,10 +46,19 @@ public class AppController {
             value = "/cards",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public List<Card> getCard(@RequestBody User user) {
-        Card card = new Card();
-        card.setUser(user);
-        return cardRepository.findCardsByUser(user);
+    public List<Card> getCards(@RequestBody Map<String, Integer> userId) {
+        List<Card> cards = cardRepository.findCardsByUser(userId.get("userId"));
+        return cards;
     }
+
+    @RequestMapping(
+            value = "/card",
+            method = RequestMethod.POST,
+            consumes = "application/json")
+    public Card getCard(@RequestBody Map<String, Integer> cardId) {
+        return cardRepository.findCardsById(cardId.get("cardId"));
+    }
+
+
 
 }
