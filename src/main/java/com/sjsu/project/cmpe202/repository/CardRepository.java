@@ -13,6 +13,7 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
 
     @Query("FROM Card c WHERE c.user.id = :userId")
     List<Card> findCardsByUser(@Param("userId") Integer userId);
+
 //    Card findCardsByCardNumber(String cardNumber);
 //    void saveCard(User user);
     Card findCardsById(Integer id);

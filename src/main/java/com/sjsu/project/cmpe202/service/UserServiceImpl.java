@@ -32,9 +32,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(Card card) {
-        card.setUser(card.getUser());
-        card.setCardNumber(card.getCardNumber());
-        card.setCardCode(card.getCardCode());
         cardRepository.save(card);
     }
 }

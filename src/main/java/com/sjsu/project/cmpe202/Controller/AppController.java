@@ -52,12 +52,25 @@ public class AppController {
     }
 
     @RequestMapping(
+            value = "/addCard",
+            method = RequestMethod.POST,
+            consumes = "application/json")
+    public String addCard(@RequestBody Map<String, String> card) {
+        User user = userRepository.findByUsername(card.get("username"));
+        Card cardInstance = new Card(card.get("cardNumber"), card.get("cardCode"), user);
+        cardRepository.save(cardInstance);
+        return "Add card Done";
+    }
+
+    @RequestMapping(
             value = "/card",
             method = RequestMethod.POST,
             consumes = "application/json")
     public Card getCard(@RequestBody Map<String, Integer> cardId) {
         return cardRepository.findCardsById(cardId.get("cardId"));
     }
+
+
 
 
 

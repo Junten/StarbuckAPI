@@ -21,6 +21,12 @@ public class Card {
     @JoinColumn(name= "user_id", nullable = false)
     private User user;
 
+    public Card(String cardNumber, String cardCode, User user) {
+        this.cardNumber = cardNumber;
+        this.cardCode = cardCode;
+        this.user = user;
+    }
+
     public int getId() {
         return id;
     }
