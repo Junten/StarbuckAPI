@@ -8,9 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories(repositoryFactoryBeanClass = DataTablesRepositoryFactoryBean.class)
 public class Cmpe202Application {
-
 	public static void main(String[] args) {
 		SpringApplication.run(Cmpe202Application.class, args);
 	}
-
 }

@@ -12,7 +12,7 @@ public class User {
     @Column(name = "username", length = 36, nullable = false)
     private String username;
 
-    @Column(name = "password", length = 4)
+    @Column(name = "password", length = 4, nullable = false)
     private String password;
 
     public String getUsername() {
