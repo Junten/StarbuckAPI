@@ -1,10 +1,8 @@
 package com.sjsu.project.cmpe202.repository;
 
 import com.sjsu.project.cmpe202.model.User;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
-    void deleteByUsername(String username);
-
+public interface UserRepository extends JpaRepository<User, Integer> {
     User findByUsername(String username);
 }

@@ -15,9 +15,6 @@ public class User {
     @Column(name = "password", length = 4)
     private String password;
 
-    @OneToMany
-    private Card[] cards;
-
     public String getUsername() {
         return username;
     }
@@ -32,14 +29,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Card[] getCards() {
-        return cards;
-    }
-
-    public void setCards(Card[] cards) {
-        this.cards = cards;
     }
 
     public String getPassword() {

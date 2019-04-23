@@ -14,9 +14,9 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import javax.sql.DataSource;
 
+
 @Configuration
 @EnableWebSecurity
-@PropertySource("classpath:mysql-query.properties")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 

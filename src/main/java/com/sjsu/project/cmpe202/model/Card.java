@@ -2,6 +2,8 @@ package com.sjsu.project.cmpe202.model;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "cards")
 public class Card {
 
     @Id
@@ -15,7 +17,7 @@ public class Card {
     private String cardCode;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "username")
     private User user;
 
     public int getId() {
