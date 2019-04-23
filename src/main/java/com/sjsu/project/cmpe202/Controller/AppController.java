@@ -33,15 +33,19 @@ public class AppController {
     @RequestMapping(
             value = "/user",
             method = RequestMethod.POST,
-            consumes = "text/plain")
-    public String getUser(@RequestBody String username) {
-//        User user = userRepository.findByUsername("cmpe202");
-//        String username_string = request.getParameter("username");
-        return username;
+            consumes = "application/json")
+    public User getUser(@RequestBody Map<String, String> username) {
+        return userRepository.findByUsername(username.get("username"));
     }
 
-    @RequestMapping(value = "/cards", method = RequestMethod.POST)
-    public List<Card> getCard(@RequestBody User User) {
-        return cardRepository.findCardsByUser(User);
+    @RequestMapping(
+            value = "/cards",
+            method = RequestMethod.POST,
+            consumes = "application/json")
+    public List<Card> getCard(@RequestBody User user) {
+        Card card = new Card();
+        card.setUser(user);
+        return cardRepository.findCardsByUser(user);
     }
+
 }

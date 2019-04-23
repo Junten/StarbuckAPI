@@ -9,4 +9,5 @@ import java.util.List;
 public interface CardRepository extends JpaRepository<Card, Integer> {
     List<Card> findCardsByUser(User user);
 //    Card findCardsByCardNumber(String cardNumber);
+    void saveCard(User user);
 }
