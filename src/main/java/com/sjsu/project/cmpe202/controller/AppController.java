@@ -1,4 +1,4 @@
-package com.sjsu.project.cmpe202.Controller;
+package com.sjsu.project.cmpe202.controller;
 
 
 import java.util.*;
@@ -47,7 +47,7 @@ public class AppController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public List<Card> getCards(@RequestBody Map<String, Integer> userId) {
-        List<Card> cards = cardRepository.findCardsByUser(userId.get("userId"));
+        List<Card> cards = cardRepository.findCardsByUser(userId.get("user_id"));
         return cards;
     }
 
@@ -57,7 +57,8 @@ public class AppController {
             consumes = "application/json")
     public String addCard(@RequestBody Map<String, String> card) {
         User user = userRepository.findByUsername(card.get("username"));
-        Card cardInstance = new Card(card.get("cardNumber"), card.get("cardCode"), user);
+        Double balance = Double.parseDouble(card.get("balance"));
+        Card cardInstance = new Card(card.get("card_number"), card.get("card_code"), balance, user);
         cardRepository.save(cardInstance);
         return "Add card Done";
     }
@@ -67,7 +68,7 @@ public class AppController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public Card getCard(@RequestBody Map<String, Integer> cardId) {
-        return cardRepository.findCardsById(cardId.get("cardId"));
+        return cardRepository.findCardsById(cardId.get("card_id"));
     }
 
 
