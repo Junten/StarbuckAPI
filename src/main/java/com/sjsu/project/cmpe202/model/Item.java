@@ -16,6 +16,10 @@ public class Item {
     @Column(name = "image_url")
     private String imageUrl;
 
+    public Item() {
+
+    }
+
     public int getId() {
         return id;
     }

@@ -25,6 +25,10 @@ public class Payment {
     @JoinColumn(name= "order_id", nullable = false)
     private Card order;
 
+    public Payment() {
+
+    }
+
     public int getId() {
         return id;
     }

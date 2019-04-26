@@ -24,6 +24,9 @@ public class Card {
     @JoinColumn(name= "user_id", nullable = false)
     private User user;
 
+    public Card() {
+    }
+
     public Card(String cardNumber, String cardCode, Double balance, User user) {
         this.cardNumber = cardNumber;
         this.cardCode = cardCode;

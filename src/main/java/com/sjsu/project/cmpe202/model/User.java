@@ -17,6 +17,10 @@ public class User {
     @Column(name = "pin", length = 4, nullable = false)
     private String pin;
 
+    public User() {
+
+    }
+
     public String getUsername() {
         return username;
     }

@@ -20,11 +20,15 @@ public class Order {
     private User user;
 
     @Column(name = "created_date")
-    LocalDate date;
+    private LocalDate date;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "orders_items", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
     private Set<Item> items;
+
+    public Order() {
+
+    }
 
     public int getId() {
         return id;
