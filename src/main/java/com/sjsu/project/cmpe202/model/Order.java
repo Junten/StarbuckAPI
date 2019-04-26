@@ -2,6 +2,7 @@ package com.sjsu.project.cmpe202.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -21,6 +22,10 @@ public class Order {
     @Column(name = "created_date")
     LocalDate date;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "orders_items", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private Set<Item> items;
+
     public int getId() {
         return id;
     }
@@ -37,6 +42,10 @@ public class Order {
         return date;
     }
 
+    public Set<Item> getItems() {
+        return items;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -51,5 +60,9 @@ public class Order {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public void setItems(Set<Item> items) {
+        this.items = items;
     }
 }

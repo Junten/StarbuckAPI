@@ -21,6 +21,10 @@ public class Payment {
     @JoinColumn(name= "card_id", nullable = false)
     private Card card;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name= "order_id", nullable = false)
+    private Card order;
+
     public int getId() {
         return id;
     }
@@ -37,6 +41,10 @@ public class Payment {
         return card;
     }
 
+    public Card getOrder() {
+        return order;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -51,5 +59,9 @@ public class Payment {
 
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    public void setOrder(Card order) {
+        this.order = order;
     }
 }
