@@ -20,7 +20,7 @@ public class OrderController {
     UserRepository userRepository;
 
     @RequestMapping(
-            value = "/get_orders_by_user_id",
+            value = "/managed_order/get_orders_by_user_id",
             method = RequestMethod.POST,
             consumes = "application/json")
     public List<Order> getOrdersByUserId(@RequestBody Map<String, Integer> userId) {
@@ -28,13 +28,11 @@ public class OrderController {
     }
 
     @RequestMapping(
-            value = "/get_orders_by_username",
+            value = "/managed_order/get_orders_by_username",
             method = RequestMethod.POST,
             consumes = "application/json")
     public List<Order> getOrdersByUsername(@RequestBody Map<String, String> username) {
         User user = userRepository.findByUsername(username.get("username"));
         return orderRepository.findOrdersByUser(user.getId());
     }
-
-
 }

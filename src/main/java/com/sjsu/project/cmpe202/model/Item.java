@@ -13,6 +13,9 @@ public class Item {
     @Column(name = "product", nullable = false)
     private String product;
 
+    @Column(name = "price", nullable = false)
+    private Double price;
+
     @Column(name = "image_url")
     private String imageUrl;
 
@@ -32,6 +35,10 @@ public class Item {
         return product;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -42,5 +49,9 @@ public class Item {
 
     public void setProduct(String product) {
         this.product = product;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

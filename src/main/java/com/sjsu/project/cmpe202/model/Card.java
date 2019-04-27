@@ -11,7 +11,7 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "card_number", length = 9, nullable = false)
+    @Column(name = "card_number", length = 9, nullable = false, unique = true)
     private String cardNumber;
 
     @Column(name = "card_code", length = 3, nullable = false)
@@ -20,7 +20,7 @@ public class Card {
     @Column(name = "balance", nullable = false)
     private Double balance;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name= "user_id", nullable = false)
     private User user;
 

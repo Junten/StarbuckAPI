@@ -13,7 +13,7 @@ public class AppController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home() {
-        return "Hello World!";
+        return "Hello World! It works";
 
     }
 }

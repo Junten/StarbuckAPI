@@ -14,7 +14,7 @@ public class ItemController {
     private ItemRepository itemRepository;
 
     @RequestMapping(
-            value = "/get_all_items",
+            value = "/item/get_all_items",
             method = RequestMethod.GET,
             consumes = "application/json")
     public List<Item> getOrdersByUserId() {

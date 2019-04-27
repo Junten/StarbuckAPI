@@ -29,7 +29,7 @@ public class PaymentController {
     private CardRepository cardRepository;
 
     @RequestMapping(
-            value = "/get_payments_by_user_id",
+            value = "/payment/get_payments_by_user_id",
             method = RequestMethod.POST,
             consumes = "application/json")
     public List<Payment> getPaymentsByUserId(@RequestBody Map<String, Integer> userId) {
@@ -37,7 +37,7 @@ public class PaymentController {
     }
 
     @RequestMapping(
-            value = "/get_payments_by_username",
+            value = "/payment/get_payments_by_username",
             method = RequestMethod.POST,
             consumes = "application/json")
     public List<Payment> getPaymentsByUsername(@RequestBody Map<String, String> username) {
@@ -46,7 +46,7 @@ public class PaymentController {
     }
 
     @RequestMapping(
-            value = "/get_payments_by_card_id",
+            value = "/payment/get_payments_by_card_id",
             method = RequestMethod.POST,
             consumes = "application/json")
     public List<Payment> getPaymentsByCardId(@RequestBody Map<String, Integer> cardId) {
@@ -54,7 +54,7 @@ public class PaymentController {
     }
 
     @RequestMapping(
-            value = "/get_payments_by_order_id",
+            value = "/payment/get_payments_by_order_id",
             method = RequestMethod.POST,
             consumes = "application/json")
     public List<Payment> getPaymentsByOrderId(@RequestBody Map<String, Integer> orderId) {
