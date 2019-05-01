@@ -1,12 +1,14 @@
 package com.sjsu.project.cmpe202.controller;
 
-import com.sjsu.project.cmpe202.model.Card;
 import com.sjsu.project.cmpe202.model.Order;
 import com.sjsu.project.cmpe202.model.User;
 import com.sjsu.project.cmpe202.repository.OrderRepository;
 import com.sjsu.project.cmpe202.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -15,13 +17,13 @@ import java.util.Map;
 public class OrderController {
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @RequestMapping(
-            value = "/get_orders_by_user_id",
+            value = "/order/get_orders_by_user_id",
             method = RequestMethod.POST,
             consumes = "application/json")
     public List<Order> getOrdersByUserId(@RequestBody Map<String, Integer> userId) {
@@ -29,7 +31,7 @@ public class OrderController {
     }
 
     @RequestMapping(
-            value = "/get_orders_by_username",
+            value = "/order/get_orders_by_username",
             method = RequestMethod.POST,
             consumes = "application/json")
     public List<Order> getOrdersByUsername(@RequestBody Map<String, String> username) {

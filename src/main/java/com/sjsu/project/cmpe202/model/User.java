@@ -2,6 +2,7 @@ package com.sjsu.project.cmpe202.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -11,11 +12,33 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "username", length = 36, nullable = false)
+    @Column(name = "username", length = 36, nullable = false, unique = true)
     private String username;
 
     @Column(name = "pin", length = 4, nullable = false)
     private String pin;
+
+    @Column(name = "first_name", length = 64)
+    private String firstName;
+
+    @Column(name = "last_name", length = 64)
+    private String lastName;
+
+    @Column(name = "email", length = 64, unique = true)
+    private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Card> cards;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Payment> payments;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Order> orders;
+
+    public User() {
+
+    }
 
     public String getUsername() {
         return username;
@@ -33,11 +56,59 @@ public class User {
         this.id = id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getPin() {
         return pin;
     }
 
     public void setPin(String pin) {
         this.pin = pin;
+    }
+
+    public Set<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
+    }
+
+    public Set<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Set<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }

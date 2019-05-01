@@ -1,6 +1,9 @@
 package com.sjsu.project.cmpe202.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -11,7 +14,7 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "card_number", length = 9, nullable = false)
+    @Column(name = "card_number", length = 9, nullable = false, unique = true)
     private String cardNumber;
 
     @Column(name = "card_code", length = 3, nullable = false)
@@ -20,9 +23,17 @@ public class Card {
     @Column(name = "balance", nullable = false)
     private Double balance;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "user_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.DETACH)
+    private Set<Payment> payments;
+
+    public Card() {
+
+    }
 
     public Card(String cardNumber, String cardCode, Double balance, User user) {
         this.cardNumber = cardNumber;
@@ -71,5 +82,11 @@ public class Card {
         this.user = user;
     }
 
+    public Set<Payment> getPayments() {
+        return payments;
+    }
 
+    public void setPayments(Set<Payment> payments) {
+        this.payments = payments;
+    }
 }

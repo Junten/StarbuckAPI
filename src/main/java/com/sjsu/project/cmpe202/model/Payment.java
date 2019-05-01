@@ -1,7 +1,8 @@
 package com.sjsu.project.cmpe202.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "payments")
@@ -13,52 +14,57 @@ public class Payment {
     @Column(name = "total", nullable = false)
     private Double total;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "user_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "card_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "card_id", nullable = false)
     private Card card;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "order_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "order_id", nullable = false)
     private Card order;
+
+    public Payment() {
+
+    }
 
     public int getId() {
         return id;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Card getCard() {
-        return card;
-    }
-
-    public Card getOrder() {
-        return order;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+    public Double getTotal() {
+        return total;
+    }
+
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void setUser(User user) {
         this.user = user;
     }
 
+    public Card getCard() {
+        return card;
+    }
+
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    public Card getOrder() {
+        return order;
     }
 
     public void setOrder(Card order) {
