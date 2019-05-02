@@ -1,11 +1,9 @@
 package com.sjsu.project.cmpe202.controller;
 
 import com.sjsu.project.cmpe202.model.Card;
-import com.sjsu.project.cmpe202.model.Order;
 import com.sjsu.project.cmpe202.model.Payment;
 import com.sjsu.project.cmpe202.model.User;
 import com.sjsu.project.cmpe202.repository.CardRepository;
-import com.sjsu.project.cmpe202.repository.OrderRepository;
 import com.sjsu.project.cmpe202.repository.PaymentRepository;
 import com.sjsu.project.cmpe202.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +22,6 @@ public class PaymentController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private OrderRepository orderRepository;
 
     @Autowired
     private PaymentRepository paymentRepository;
