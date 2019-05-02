@@ -38,50 +38,52 @@ public class PaymentController {
             value = "/payment/get_payments_by_user_id",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public List<Payment> getPaymentsByUserId(@RequestBody Map<String, Integer> userId) {
-        return paymentRepository.findPaymentsByUser(userId.get("user_id"));
+    public ResponseEntity<List<Payment>> getPaymentsByUserId(@RequestBody Map<String, Integer> user) {
+        if (!user.containsKey("user_id"))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(paymentRepository.findPaymentsByUser(user.get("user_id")), HttpStatus.OK);
     }
 
     @RequestMapping(
             value = "/payment/get_payments_by_username",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public List<Payment> getPaymentsByUsername(@RequestBody Map<String, String> username) {
-        User user = userRepository.findByUsername(username.get("username"));
-        return paymentRepository.findPaymentsByUser(user.getId());
+    public ResponseEntity<List<Payment>> getPaymentsByUsername(@RequestBody Map<String, String> user) {
+        if (!user.containsKey("username"))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        int id = userRepository.findByUsername(user.get("username")).getId();
+        return new ResponseEntity<>(paymentRepository.findPaymentsByUser(id), HttpStatus.OK);
     }
 
     @RequestMapping(
             value = "/payment/get_payments_by_card_id",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public List<Payment> getPaymentsByCardId(@RequestBody Map<String, Integer> cardId) {
-        return paymentRepository.findPaymentsByCard(cardId.get("card_id"));
+    public ResponseEntity<List<Payment>> getPaymentsByCardId(@RequestBody Map<String, Integer> card) {
+        if (!card.containsKey("card_id"))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(paymentRepository.findPaymentsByCard(card.get("card_id")), HttpStatus.OK);
     }
 
     @RequestMapping(
             value = "/payment/get_payments_by_card_number",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public List<Payment> getPaymentsByCardNumber(@RequestBody Map<String, String> cardNumber) {
-        int cardId = cardRepository.findCardByCardNumber(cardNumber.get("card_number")).getId();
-        return paymentRepository.findPaymentsByCard(cardId);
-    }
-
-    @RequestMapping(
-            value = "/payment/get_payments_by_order_id",
-            method = RequestMethod.POST,
-            consumes = "application/json")
-    public List<Payment> getPaymentsByOrderId(@RequestBody Map<String, Integer> orderId) {
-        return paymentRepository.findPaymentsByOrder(orderId.get("order_id"));
+    public ResponseEntity<List<Payment>> getPaymentsByCardNumber(@RequestBody Map<String, String> card) {
+        if (!card.containsKey("card_number"))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        int cardId = cardRepository.findCardByCardNumber(card.get("card_number")).getId();
+        return new ResponseEntity<>(paymentRepository.findPaymentsByCard(cardId), HttpStatus.OK);
     }
 
     @RequestMapping(
             value = "/payment/get_payment_by_payment_id",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public Payment getPaymentByPaymentId(@RequestBody Map<String, Integer> payment) {
-        return paymentRepository.findPaymentById(payment.get("payment_id"));
+    public ResponseEntity<Payment> getPaymentByPaymentId(@RequestBody Map<String, Integer> payment) {
+        if (!payment.containsKey("username"))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(paymentRepository.findPaymentById(payment.get("payment_id")), HttpStatus.OK);
     }
 
     @RequestMapping(
@@ -89,22 +91,22 @@ public class PaymentController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public ResponseEntity<String> addNewPayment(@RequestBody Map<String, String> parameter) {
-        String username;
-        String cardNumber;
-        User user;
-        Card card;
-        if (parameter.containsKey("username")) {
-            user = userRepository.findByUsername(parameter.get("username"));
-        } else {
-            return new ResponseEntity<>("Missing username parameter", HttpStatus.BAD_REQUEST);
-        }
+        if (!parameter.containsKey("username"))
+            return new ResponseEntity<>("Missing parameter username", HttpStatus.BAD_REQUEST);
 
-        if (parameter.containsKey("cardNumber")) {
-            card = cardRepository.findCardByCardNumber(parameter.get("cardNumber"));
-        } else {
-            return new ResponseEntity<>("Missing card_number parameter", HttpStatus.BAD_REQUEST);
-        }
+        if (!parameter.containsKey("cardNumber"))
+            return new ResponseEntity<>("Missing parameter card_number", HttpStatus.BAD_REQUEST);
 
+        if (!parameter.containsKey("total"))
+            return new ResponseEntity<>("Missing parameter total", HttpStatus.BAD_REQUEST);
+
+        Card card = cardRepository.findCardByCardNumber(parameter.get("cardNumber"));
+        User user = userRepository.findByUsername(parameter.get("username"));
+        Payment payment = new Payment();
+        payment.setCard(card);
+        payment.setUser(user);
+        Double total = Double.parseDouble(parameter.get("total"));
+        payment.setTotal(total);
         return new ResponseEntity<>("Create new Payment Successfully", HttpStatus.OK);
     }
 

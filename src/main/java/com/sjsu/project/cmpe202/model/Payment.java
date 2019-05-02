@@ -23,10 +23,6 @@ public class Payment {
     @JoinColumn(name = "card_id", nullable = false)
     private Card card;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "order_id", nullable = false)
-    private Card order;
-
     public Payment() {
 
     }
@@ -63,11 +59,4 @@ public class Payment {
         this.card = card;
     }
 
-    public Card getOrder() {
-        return order;
-    }
-
-    public void setOrder(Card order) {
-        this.order = order;
-    }
 }
