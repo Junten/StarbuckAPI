@@ -51,7 +51,7 @@ public class CardController {
         if (!user.containsKey("username")) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        int id = userRepository.findByUsername(user.get("username")).getId();
+        int id = userRepository.findUserByUsername(user.get("username")).getId();
         return new ResponseEntity<>(cardRepository.findCardsByUser(id), HttpStatus.OK);
     }
 
@@ -61,7 +61,7 @@ public class CardController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public ResponseEntity<String> addNewCard(@RequestBody Map<String, String> card) {
-        User user = userRepository.findByUsername(card.get("username"));
+        User user = userRepository.findUserByUsername(card.get("username"));
         Double balance = Double.parseDouble(card.get("balance"));
         Card cardInstance = new Card(card.get("card_number"), card.get("card_code"), balance, user);
         cardRepository.save(cardInstance);

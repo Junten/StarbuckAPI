@@ -38,7 +38,7 @@ public class UserController {
         if (!user.containsKey("username"))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(userRepository.findByUsername(user.get("username")), HttpStatus.OK);
+        return new ResponseEntity<>(userRepository.findUserByUsername(user.get("username")), HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "http://localhost:8080")
@@ -81,7 +81,7 @@ public class UserController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public ResponseEntity<String> updateUserByUsername(@RequestBody Map<String, String> user) {
-        User updateUser = userRepository.findByUsername(user.get("username"));
+        User updateUser = userRepository.findUserByUsername(user.get("username"));
 
         if (user.containsKey("first_name"))
             updateUser.setFirstName(user.get("first_name"));
@@ -145,7 +145,7 @@ public class UserController {
         if (!user.containsKey("username"))
             return new ResponseEntity<>("Missing Parameter username", HttpStatus.BAD_REQUEST);
 
-        int id = userRepository.findByUsername(user.get("username")).getId();
+        int id = userRepository.findUserByUsername(user.get("username")).getId();
         userRepository.deleteById(id);
         return new ResponseEntity<>("Delete User Successfully", HttpStatus.OK);
     }

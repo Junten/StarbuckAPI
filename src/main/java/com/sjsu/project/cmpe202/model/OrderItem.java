@@ -1,13 +1,12 @@
 package com.sjsu.project.cmpe202.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "orders_items")
-public class OrdersItems {
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,14 +14,19 @@ public class OrdersItems {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @JsonIgnore
     private Order order;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "item_id", referencedColumnName = "id")
     private Item item;
 
     @Column(name = "quantity")
     private int quantity;
+
+    public OrderItem() {
+        this.quantity = 0;
+    }
 
     public int getId() {
         return id;

@@ -9,10 +9,7 @@ import com.sjsu.project.cmpe202.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -29,6 +26,7 @@ public class PaymentController {
     @Autowired
     private CardRepository cardRepository;
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(
             value = "/payment/get_payments_by_user_id",
             method = RequestMethod.POST,
@@ -39,6 +37,7 @@ public class PaymentController {
         return new ResponseEntity<>(paymentRepository.findPaymentsByUser(user.get("user_id")), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(
             value = "/payment/get_payments_by_username",
             method = RequestMethod.POST,
@@ -46,10 +45,11 @@ public class PaymentController {
     public ResponseEntity<List<Payment>> getPaymentsByUsername(@RequestBody Map<String, String> user) {
         if (!user.containsKey("username"))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        int id = userRepository.findByUsername(user.get("username")).getId();
+        int id = userRepository.findUserByUsername(user.get("username")).getId();
         return new ResponseEntity<>(paymentRepository.findPaymentsByUser(id), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(
             value = "/payment/get_payments_by_card_id",
             method = RequestMethod.POST,
@@ -60,6 +60,7 @@ public class PaymentController {
         return new ResponseEntity<>(paymentRepository.findPaymentsByCard(card.get("card_id")), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(
             value = "/payment/get_payments_by_card_number",
             method = RequestMethod.POST,
@@ -71,6 +72,7 @@ public class PaymentController {
         return new ResponseEntity<>(paymentRepository.findPaymentsByCard(cardId), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(
             value = "/payment/get_payment_by_payment_id",
             method = RequestMethod.POST,
@@ -81,6 +83,7 @@ public class PaymentController {
         return new ResponseEntity<>(paymentRepository.findPaymentById(payment.get("payment_id")), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(
             value = "/payment/add_new_payment",
             method = RequestMethod.POST,
@@ -96,7 +99,7 @@ public class PaymentController {
             return new ResponseEntity<>("Missing parameter total", HttpStatus.BAD_REQUEST);
 
         Card card = cardRepository.findCardByCardNumber(parameter.get("cardNumber"));
-        User user = userRepository.findByUsername(parameter.get("username"));
+        User user = userRepository.findUserByUsername(parameter.get("username"));
         Payment payment = new Payment();
         payment.setCard(card);
         payment.setUser(user);
