@@ -1,7 +1,6 @@
 package com.sjsu.project.cmpe202.model;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -41,6 +40,15 @@ public class User {
 
     public User() {
 
+    }
+
+    public User(String username, String pin, String firstName, String lastName, String email) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.pin = pin;
+        this.email = email;
     }
 
     public String getUsername() {

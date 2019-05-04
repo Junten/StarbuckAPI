@@ -12,7 +12,7 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     @JsonIgnore
     private Cart cart;

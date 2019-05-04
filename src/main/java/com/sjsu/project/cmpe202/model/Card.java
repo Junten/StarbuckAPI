@@ -29,6 +29,7 @@ public class Card {
     private User user;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.DETACH)
+    @JsonIgnore
     private Set<Payment> payments;
 
     public Card() {

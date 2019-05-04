@@ -92,20 +92,31 @@ public class PaymentController {
         if (!parameter.containsKey("username"))
             return new ResponseEntity<>("Missing parameter username", HttpStatus.BAD_REQUEST);
 
-        if (!parameter.containsKey("cardNumber"))
+        if (!parameter.containsKey("card_number"))
             return new ResponseEntity<>("Missing parameter card_number", HttpStatus.BAD_REQUEST);
 
         if (!parameter.containsKey("total"))
             return new ResponseEntity<>("Missing parameter total", HttpStatus.BAD_REQUEST);
 
-        Card card = cardRepository.findCardByCardNumber(parameter.get("cardNumber"));
+        Card card = cardRepository.findCardByCardNumber(parameter.get("card_number"));
         User user = userRepository.findUserByUsername(parameter.get("username"));
         Payment payment = new Payment();
         payment.setCard(card);
         payment.setUser(user);
         Double total = Double.parseDouble(parameter.get("total"));
         payment.setTotal(total);
+        card.setBalance(card.getBalance() - total);
+        cardRepository.save(card);
+        paymentRepository.save(payment);
         return new ResponseEntity<>("Create new Payment Successfully", HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
+    @RequestMapping(
+            value = "/payment/get_all_payments",
+            method = RequestMethod.GET,
+            consumes = "application/json")
+    public ResponseEntity<List<Payment>> getAllPayments() {
+        return new ResponseEntity<>(paymentRepository.findAll(), HttpStatus.OK);
+    }
 }

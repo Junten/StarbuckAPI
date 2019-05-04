@@ -83,6 +83,20 @@ public class CardController {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(
+            value = "/card/delete_card_by_card_number",
+            method = RequestMethod.DELETE,
+            consumes = "application/json")
+    public ResponseEntity<String> deleteCardByCardNumber(@RequestBody Map<String, String> card) {
+        if (!card.containsKey("card_number"))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        int id = cardRepository.findCardByCardNumber(card.get("card_number")).getId();
+        cardRepository.deleteById(id);
+        return new ResponseEntity<>("Delete Card Successfully", HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "http://localhost:8080")
+    @RequestMapping(
             value = "/card/update_card_by_card_id",
             method = RequestMethod.POST,
             consumes = "application/json")

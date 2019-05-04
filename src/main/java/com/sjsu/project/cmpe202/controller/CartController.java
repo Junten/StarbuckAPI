@@ -1,13 +1,14 @@
 package com.sjsu.project.cmpe202.controller;
 
 import com.sjsu.project.cmpe202.model.Cart;
-import com.sjsu.project.cmpe202.repository.*;
+import com.sjsu.project.cmpe202.repository.CartRepository;
+import com.sjsu.project.cmpe202.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.Map;
 
 @RestController
 public class CartController {

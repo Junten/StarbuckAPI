@@ -1,6 +1,8 @@
 package com.sjsu.project.cmpe202.controller;
 
+import com.sjsu.project.cmpe202.model.Cart;
 import com.sjsu.project.cmpe202.model.User;
+import com.sjsu.project.cmpe202.repository.CartRepository;
 import com.sjsu.project.cmpe202.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,9 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
 
     @CrossOrigin(origins = "http://localhost:8080")
     @ResponseBody
@@ -48,7 +53,7 @@ public class UserController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public ResponseEntity<String> addNewUser(@RequestBody Map<String, String> user) {
-        User newUser = new User();
+
         if (!user.containsKey("username"))
             return new ResponseEntity<>("Missing Parameter username", HttpStatus.BAD_REQUEST);
 
@@ -64,11 +69,12 @@ public class UserController {
         if (!user.containsKey("email"))
             return new ResponseEntity<>("Missing Parameter email", HttpStatus.BAD_REQUEST);
 
-        newUser.setUsername(user.get("username"));
-        newUser.setUsername(user.get("pin"));
-        newUser.setUsername(user.get("first_name"));
-        newUser.setUsername(user.get("last_name"));
-        newUser.setUsername(user.get("email"));
+
+        User newUser = new User(user.get("username"), user.get("pin"), user.get("first_name"), user.get("last_name"), user.get("email"));
+        Cart cart = new Cart();
+        cart.setUser(newUser);
+        cartRepository.save(cart);
+
         userRepository.save(newUser);
 
         return new ResponseEntity<>("Add New user Successfully", HttpStatus.OK);
@@ -97,29 +103,29 @@ public class UserController {
         return new ResponseEntity<>("Update User Successfully", HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
-    @ResponseBody
-    @RequestMapping(
-            value = "/user/update_user_by_user_id",
-            method = RequestMethod.POST,
-            consumes = "application/json")
-    public ResponseEntity<String> updateUserByUserId(@RequestBody Map<String, String> user) {
-        int id = Integer.parseInt(user.get("user_id"));
-        User updateUser = userRepository.findUserById(id);
-
-        if (user.containsKey("first_name"))
-            updateUser.setFirstName(user.get("first_name"));
-
-        if (user.containsKey("last_name"))
-            updateUser.setLastName(user.get("last_name"));
-
-        if (user.containsKey("email"))
-            updateUser.setEmail(user.get("email"));
-
-        userRepository.save(updateUser);
-
-        return new ResponseEntity<>("Update User Successfully", HttpStatus.OK);
-    }
+//    @CrossOrigin(origins = "http://localhost:8080")
+//    @ResponseBody
+//    @RequestMapping(
+//            value = "/user/update_user_by_user_id",
+//            method = RequestMethod.POST,
+//            consumes = "application/json")
+//    public ResponseEntity<String> updateUserByUserId(@RequestBody Map<String, String> user) {
+//        int id = Integer.parseInt(user.get("user_id"));
+//        User updateUser = userRepository.findUserById(id);
+//
+//        if (user.containsKey("first_name"))
+//            updateUser.setFirstName(user.get("first_name"));
+//
+//        if (user.containsKey("last_name"))
+//            updateUser.setLastName(user.get("last_name"));
+//
+//        if (user.containsKey("email"))
+//            updateUser.setEmail(user.get("email"));
+//
+//        userRepository.save(updateUser);
+//
+//        return new ResponseEntity<>("Update User Successfully", HttpStatus.OK);
+//    }
 
     @CrossOrigin(origins = "http://localhost:8080")
     @ResponseBody

@@ -1,16 +1,18 @@
 package com.sjsu.project.cmpe202.controller;
 
+import com.sjsu.project.cmpe202.model.CartItem;
 import com.sjsu.project.cmpe202.model.Order;
+import com.sjsu.project.cmpe202.model.OrderItem;
 import com.sjsu.project.cmpe202.model.User;
-import com.sjsu.project.cmpe202.repository.OrderRepository;
-import com.sjsu.project.cmpe202.repository.UserRepository;
+import com.sjsu.project.cmpe202.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class OrderController {
@@ -20,6 +22,15 @@ public class OrderController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private CartItemRepository cartItemRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(
@@ -59,6 +70,14 @@ public class OrderController {
         newOrder.setDate(createDate);
         newOrder.setUser(user);
         orderRepository.save(newOrder);
+
+        int cartId = cartRepository.findCartByUser_Id(user.getId()).getId();
+        List<CartItem> cartItems = cartItemRepository.findCartItemsByCart(cartId);
+        for (CartItem cartItem : cartItems) {
+            OrderItem orderItem = new OrderItem(newOrder, cartItem.getItem(), cartItem.getQuantity());
+            orderItemRepository.save(orderItem);
+            cartItemRepository.deleteById(cartItem.getId());
+        }
         return new ResponseEntity<>("Add new Order Successfully", HttpStatus.OK);
     }
 

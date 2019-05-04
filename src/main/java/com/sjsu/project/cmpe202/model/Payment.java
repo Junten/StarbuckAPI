@@ -21,7 +21,6 @@ public class Payment {
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "card_id", nullable = false)
-    @JsonIgnore
     private Card card;
 
     public Payment() {

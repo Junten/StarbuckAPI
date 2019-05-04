@@ -24,6 +24,12 @@ public class OrderItem {
     @Column(name = "quantity")
     private int quantity;
 
+    public OrderItem(Order order, Item item, int quantity) {
+        this.order = order;
+        this.item = item;
+        this.quantity = quantity;
+    }
+
     public OrderItem() {
         this.quantity = 0;
     }

@@ -8,9 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class OrderItemController {
@@ -37,7 +36,7 @@ public class OrderItemController {
             consumes = "application/json")
     public ResponseEntity<String> addOrderItemByUsername(@RequestBody Map<String, String> user) {
         if (!user.containsKey("username"))
-            return new ResponseEntity<>( "Missing Parameter username", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Missing Parameter username", HttpStatus.BAD_REQUEST);
 
         Order newOrder = new Order();
         User orderUser = userRepository.findUserByUsername(user.get("username"));
