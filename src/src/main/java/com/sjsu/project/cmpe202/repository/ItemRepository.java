@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Integer> {
     List<Item> findAll();
-    Item findItemByProduct(String product);
-    Item findItemById(int id);
 }
